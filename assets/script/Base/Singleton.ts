@@ -1,16 +1,13 @@
 /**
- * 单例模式
+ * 单例模式基类
  */
 export default class Singleton {
-    protected static _instance: any = null;
-    public static getInstance<T extends {}>(this: new () => T): T {
-        if (!(<any>this).instance) {
-            (<any>this).instance = new this();
+    private static _instance: any = null;
+    public constructor() { }
+    public static get _ins() {
+        if (this._instance === null) {
+            this._instance = new this();
         }
-        return (<any>this).instance;
-    }
-
-    public static destroyInstance(): void {
-        (<any>this).instance = null;
+        return this._instance;
     }
 }
