@@ -1,10 +1,6 @@
 import Singleton from "../Base/Singleton";
-import ResManager from "./ResManager";
-
-const { ccclass, property } = cc._decorator;
-
-@ccclass
-export default class AudioManager extends Singleton {
+import { ResManager } from "./ResManager";
+export class AudioManager extends Singleton {
     bgMusic: any;  //背景音乐
     isPlayEffect: boolean = true; //是否播放音效
     isPlayMusic: boolean = true; //是否播放音乐
@@ -17,7 +13,7 @@ export default class AudioManager extends Singleton {
     playMusic(audioUrl: string, value = 0.5) {
         if (!this.isPlayMusic) { return; }
         this.stopMusic();
-        ResManager._ins.loadResAny(cc.url.raw('resources/music/' + audioUrl + '.mp3'), cc.AudioClip, (audio: cc.AudioClip) => {
+        ResManager.loadResAny(cc.url.raw('resources/music/' + audioUrl + '.mp3'), cc.AudioClip, (audio: cc.AudioClip) => {
             this.bgMusic = cc.audioEngine.play(audio, true, value);
         });
     };
@@ -33,7 +29,7 @@ export default class AudioManager extends Singleton {
      */
     playEffect(audioUrl: string, value = 0.5, isLoop = false) {
         if (!this.isPlayEffect) { return; }
-        ResManager._ins.loadResAny(cc.url.raw('resources/music/' + audioUrl + '.mp3'), cc.AudioClip, (audio: cc.AudioClip) => {
+        ResManager.loadResAny(cc.url.raw('resources/music/' + audioUrl + '.mp3'), cc.AudioClip, (audio: cc.AudioClip) => {
             cc.audioEngine.play(audio, true, value);
         });
     };
@@ -52,7 +48,7 @@ export default class AudioManager extends Singleton {
      */
     playAudioSource(audioUrl: string, value = 0.5, isLoop = false) {
         if (!this.isPlayMusic) { return; }
-        ResManager._ins.loadResAny(audioUrl, cc.AudioClip, (audioE: cc.AudioClip) => {
+        ResManager.loadResAny(audioUrl, cc.AudioClip, (audioE: cc.AudioClip) => {
             this.newAudioSource(audioE, value, isLoop);
         });
     }

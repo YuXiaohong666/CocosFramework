@@ -5,7 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class NewClass extends cc.Component {
@@ -20,7 +20,7 @@ export default class NewClass extends cc.Component {
 
     // onLoad () {}
 
-    start () {
+    start() {
 
     }
 

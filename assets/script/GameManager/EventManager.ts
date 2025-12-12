@@ -1,11 +1,9 @@
-import Singleton from "../Base/Singleton";
-
 export enum GameEvent {
     // 在此处定义事件名
-    Replay = "Replay"
+    REDUCE_BLOCK_LOCKED_NUM = "ReduceBlockLockedNum",
 }
 
-export default class EventManager extends Singleton {
+export class EventManager {
     /**
      * 添加一个全局监听
      * @param eventName 事件名

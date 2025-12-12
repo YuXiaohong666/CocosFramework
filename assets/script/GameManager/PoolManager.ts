@@ -1,5 +1,5 @@
 import Singleton from "../Base/Singleton";
-import CFTools from "../Tools/CFTools";
+import { CFTools } from "../Tools/CFTools";
 import { Tools } from "../Tools/Tools";
 
 export class PoolManager extends Singleton {

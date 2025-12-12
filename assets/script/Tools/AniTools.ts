@@ -1,16 +1,15 @@
-import Singleton from "../Base/Singleton";
 
 /**
  * 动画工具类
  */
-export class AniTools extends Singleton {
+export class AniTools {
     /**
      * 在一个Lab 上逐字显示文字动画
      * @param lab  label 组件或者 text 组件
      * @param str  显示文字
      * @param time 多长时间显示完成
      */
-    doLabStrAni(lab: cc.Label | cc.RichText, str: string, time: number) {
+    public static doLabStrAni(lab: cc.Label | cc.RichText, str: string, time: number) {
         lab.node.stopAllActions();
         lab.string = "";
         let strArr = str.split("");
@@ -32,7 +31,7 @@ export class AniTools extends Singleton {
      * @param iTime 播放时间
      * @param callFunc 播放完毕后回调
      */
-    openUIAni(bgN: cc.Node, bodyN: cc.Node, iTime = 0.3, callFunc = () => { }) {
+    public static openUIAni(bgN: cc.Node, bodyN: cc.Node, iTime = 0.3, callFunc = () => { }) {
         bgN.opacity = 0;
         bodyN.scale = 0;
         bgN.runAction(cc.fadeTo(iTime, 100));
@@ -48,7 +47,7 @@ export class AniTools extends Singleton {
      * @param iTime 播放时间
      * @param callFunc 播放完毕后回调
      */
-    closeUIAni(bgN: cc.Node, bodyN: cc.Node, iTime = 0.2, callFunc = () => { }) {
+    public static closeUIAni(bgN: cc.Node, bodyN: cc.Node, iTime = 0.2, callFunc = () => { }) {
         bgN.runAction(cc.fadeOut(iTime));
         bodyN.runAction(cc.sequence(
             cc.scaleTo(iTime, 0).easing(cc.easeBackIn()),
@@ -63,7 +62,7 @@ export class AniTools extends Singleton {
      * @param {Array} nodeArr  节点数组
      * @param {Array} isFadeOut  是否淡出
      */
-    sortFadeToArr(nodeArr: Array<cc.Node>, fadeT = 0.3, iTime = 0.02, isFadeOut = false) {
+    public static sortFadeToArr(nodeArr: Array<cc.Node>, fadeT = 0.3, iTime = 0.02, isFadeOut = false) {
         let toOpacity = isFadeOut ? 0 : 255;
         for (let i = 0; i < nodeArr.length; i++) {
             const obj = nodeArr[i];
@@ -82,7 +81,7 @@ export class AniTools extends Singleton {
      * @param  len 跳跃高度
      * @param  deT 等待时间
      */
-    jumpByDegressAni(obj: cc.Node, degress: number, downY = 0, len: number, speed: number, deT = 0) {
+    public static jumpByDegressAni(obj: cc.Node, degress: number, downY = 0, len: number, speed: number, deT = 0) {
         let rad = cc.misc.degreesToRadians(degress);
         let tempP = cc.v2(Math.cos(rad) * len, Math.sin(rad) * len);
         let tempT = len / speed;
@@ -101,7 +100,7 @@ export class AniTools extends Singleton {
      * @param  isScale 是否边移动边缩小
      * @param  isFade 是否边移动边淡出
      */
-    moveDegressAni(obj: cc.Node, degress?: number, len: number = 200, speed?: number, isScale = false, isFade = false) {
+    public static moveDegressAni(obj: cc.Node, degress?: number, len: number = 200, speed?: number, isScale = false, isFade = false) {
         degress = degress || this.returnRanNum(-180, 180);
         let rad = cc.misc.degreesToRadians(degress);
         let tempP = cc.v2(Math.cos(rad) * len, Math.sin(rad) * len);
@@ -126,7 +125,7 @@ export class AniTools extends Singleton {
      * @param  moveX 
      * @param  moveY 
      */
-    moveByOutInit(nodeT: cc.Node, iTime = 0.5, moveX = 0, moveY = 0) {
+    public static moveByOutInit(nodeT: cc.Node, iTime = 0.5, moveX = 0, moveY = 0) {
         nodeT.x += moveX;
         nodeT.y += moveY;
         nodeT.runAction(cc.moveBy(iTime, cc.v2(-moveX, -moveY)).easing(cc.easeBackOut()));
@@ -137,7 +136,7 @@ export class AniTools extends Singleton {
      * @param iNum 闪几次
      * @param callFunc 闪完后的回调
      */
-    sprRedAni(nodeT: cc.Node, iTime: number, iNum: number, callFunc?: any) {
+    public static sprRedAni(nodeT: cc.Node, iTime: number, iNum: number, callFunc?: any) {
         let tempNum = 0;
         nodeT.runAction(cc.sequence(
             cc.delayTime(iTime),
@@ -161,7 +160,7 @@ export class AniTools extends Singleton {
      * @param {*} delT 摇摆一次等待时间
      * @param {*} isRe 是否循环
      */
-    shakeAni(nodeT: cc.Node, isRe = false, sAngle = 10, iTime = 0.1, delT = 2) {
+    public static shakeAni(nodeT: cc.Node, isRe = false, sAngle = 10, iTime = 0.1, delT = 2) {
         let act = cc.sequence(
             cc.rotateBy(iTime, sAngle),
             cc.rotateBy(iTime, -sAngle),
@@ -178,7 +177,7 @@ export class AniTools extends Singleton {
         }
     };
     //获取随机值
-    returnRanNum(x1: number, x2: number) {
+    public static returnRanNum(x1: number, x2: number) {
         return x1 + Math.floor(Math.random() * (x2 - x1 + 1));
     };
 }

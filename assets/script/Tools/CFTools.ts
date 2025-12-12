@@ -1,9 +1,7 @@
-import Singleton from "../Base/Singleton";
-
-export default class CFTools extends Singleton {
+export class CFTools {
     /** 是否开启  Log 信息 */
     private static isLog = true;
-    private static logName: string = "CocosFrameworkLog:"
+    private static logName: string = "CocosFrameworkLog:\n"
 
     /** 普通log信息 */
     public static log(...data: any[]): void {

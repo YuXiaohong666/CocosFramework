@@ -1,3 +1,6 @@
+import { CFTools } from "../Tools/CFTools";
+import { Tools } from "../Tools/Tools";
+
 export abstract class UIManager extends cc.Component {
     /** 存放UI的字典 */
     public static UIDic: Map<string, any> = new Map();
@@ -14,16 +17,16 @@ export abstract class UIManager extends cc.Component {
             config = UIConfig[panelName];
         }
         if (config == null) {
-            console.error("未找到该UI的配置信息:" + panelName);
+            CFTools.error("未找到该UI的配置信息:" + panelName);
             return null;
         }
         if (!this.UIDic.has(panelName)) {
             if (isRemoveOther == true) {
                 this.removeAllUI();
             }
-            // this.CreateUI(config, ...param);
+            this.CreateUI(config, ...param);
         } else {
-            console.warn("已经打开过UI:" + panelName);
+            CFTools.warn("已经打开过UI:" + panelName);
         }
     };
     /**
@@ -43,32 +46,32 @@ export abstract class UIManager extends cc.Component {
                 component.closeUI(...param);
             }
         } else {
-            console.warn("已经关闭过UI:" + panelName);
+            CFTools.warn("已经关闭过UI:" + panelName);
         }
     };
     /**
      * 获取UI的Node
-     * @param {*} panelName UI配置里面的名字
+     * @param panelName UI配置里面的名字
      */
     public static GetUI(panelName: string) {
         let panel = this.UIDic.get(panelName);
         if (panel != null) {
             return panel;
         } else {
-            console.log("没有打开UI:" + panelName);
+            CFTools.log("没有打开UI:" + panelName);
             return null;
         }
     };
     /**
      * 获取UI上的脚本
-     * @param {*} panelName  UI的名字 
+     * @param panelName  UI的名字 
      */
     public static GetUIForComponent(panelName: string) {
         let panel = this.UIDic.get(panelName);
         if (panel != null) {
             return panel.getComponent(panel.config.com);
         } else {
-            console.warn("没有打开UI:" + panelName);
+            CFTools.warn("没有打开UI:" + panelName);
             return null;
         }
     };
@@ -78,21 +81,21 @@ export abstract class UIManager extends cc.Component {
      * @param param 传递参数
      * @returns 
      */
-    // public static CreateUI(config: any, ...param: any): void {
-    //     if (this.UIDic.get(config.name) != null) { return; }
-    //     let parent = cc.director.getScene().getChildByName("Canvas");
+    public static CreateUI(config: any, ...param: any): void {
+        if (this.UIDic.get(config.name) != null) { return; }
+        let parent = cc.director.getScene().getChildByName("Canvas");
 
-    //     Tools.newPrefab(config.resUrl, parent, null, config.zIndex, (node: any) => {
-    //         node.config = config;
-    //         let component = node.getComponent(config.com);
-    //         if (component && component.openUI) {
-    //             component.openUI(...param);
-    //             component.uiName = config.name;
-    //         }
-    //         // this.UIDic[config.name] = node;
-    //         this.UIDic.set(config.name, node);
-    //     });
-    // };
+        Tools.newPrefab(config.resUrl, parent, null, config.zIndex, (node: any) => {
+            node.config = config;
+            let component = node.getComponent(config.com);
+            if (component && component.openUI) {
+                component.openUI(...param);
+                component.uiName = config.name;
+            }
+            // this.UIDic[config.name] = node;
+            this.UIDic.set(config.name, node);
+        });
+    };
     /**
      * 移除所有存放在字典里的UI
      */
@@ -117,15 +120,5 @@ export abstract class UIManager extends cc.Component {
 }
 /**  name UI的名字  resUrl预制体加载路径或者名字 com绑定脚本的名字 */
 var UIConfig = <any>{
-    OverUI: { name: "OverUI", resUrl: "OverUI", com: "OverUI", zIndex: 99 },
-    ReviveUI: { name: "ReviveUI", resUrl: "ReviveUI", com: "ReviveUI", zIndex: 99 },
-    MatchingUI: { name: "MatchingUI", resUrl: "MatchingUI", com: "MatchingUI", zIndex: 99 },
-    SkinUI: { name: "SkinUI", resUrl: "SkinUI", com: "SkinUI", zIndex: 99 },
-    PackUI: { name: "PackUI", resUrl: "PackUI", com: "PackUI", zIndex: 99 },
-    LuckUI: { name: "LuckUI", resUrl: "LuckUI", com: "LuckUI", zIndex: 99 },
-    StartUseUI: { name: "StartUseUI", resUrl: "startUseUI", com: "StartUseUI", zIndex: 99 },
-
-
-    PersonUI: { name: "PersonUI", resUrl: "PersonUI", com: "PersonUI", zIndex: 100 },
-    LoadUI: { name: "LoadUI", resUrl: "LoadUI", com: "LoadUI", zIndex: 100 },
+    OverUI: { name: "OverUI", resUrl: "OverUI", com: "OverUI", zIndex: 99 }
 }

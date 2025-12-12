@@ -1,6 +1,4 @@
-
-export default class StorageManager {
-
+export class StorageManager {
     /**
      * 获取本地缓存
      * @param key 缓存名

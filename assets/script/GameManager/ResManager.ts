@@ -1,14 +1,13 @@
-import Singleton from "../Base/Singleton";
-import CFTools from "../Tools/CFTools";
+import { CFTools } from "../Tools/CFTools";
 import { Tools } from "../Tools/Tools";
 
-export default class ResManager extends Singleton {
+export class ResManager {
     /**
      * 加载游戏场景 
      * @param sceneName 加载场景的名字
      * @param callFunc 加载回调
      */
-    loadScene(sceneName: string, callFunc: any, isClear = true) {
+    public static loadScene(sceneName: string, callFunc: any, isClear = true) {
         if (isClear) {
             Tools.clearResDic();
         }
@@ -21,7 +20,7 @@ export default class ResManager extends Singleton {
      * @param url resource 下的资源路径
      * @param callBack 加载完成回调
      */
-    loadResPrefab(url: string, callBack?: any, parent?: cc.Node, Pos?: cc.Vec2, zIndex = 0) {
+    public static loadResPrefab(url: string, callBack?: any, parent?: cc.Node, Pos?: cc.Vec2, zIndex = 0) {
         this.loadResAny(url, cc.Prefab, (prefab: cc.Prefab) => {
             let clone = cc.instantiate(prefab);
             if (parent) { parent.addChild(clone, zIndex) };
@@ -36,13 +35,13 @@ export default class ResManager extends Singleton {
      * @param url resource 下的资源路径
      * @param callBack 加载完成回调
      */
-    loadResSpriteFrame(url: string, sprite: cc.Node, parent?: cc.Node, Pos?: cc.Vec2, zindex = 0, callBack?: any) {
+    public static loadResSpriteFrame(url: string, sprite: cc.Node, parent?: cc.Node, Pos?: cc.Vec2, zIndex = 0, callBack?: any) {
         cc.loader.loadRes(url, cc.SpriteFrame, function (error: any, SpriteFrame: cc.SpriteFrame) {
             if (error) {
                 CFTools.error(error);
             } else {
                 sprite.getComponent(cc.Sprite).spriteFrame = SpriteFrame;
-                if (parent) { parent.addChild(sprite, zindex) };
+                if (parent) { parent.addChild(sprite, zIndex) };
                 if (Pos) { sprite.position = cc.v3(Pos.x, Pos.y, 0) };
                 if (callBack != null) {
                     callBack(sprite);
@@ -56,7 +55,7 @@ export default class ResManager extends Singleton {
      * @param resType 加载资源的类型
      * @param callBack 加载完成回调
      */
-    loadResAny(url: string, resType: any, callBack?: any) {
+    public static loadResAny(url: string, resType: any, callBack?: any) {
         cc.loader.loadRes(url, resType, function (error: any, res: any) {
             if (error) {
                 CFTools.error(error);
@@ -68,12 +67,12 @@ export default class ResManager extends Singleton {
         });
     };
     /** 加载bundle 场景 */
-    loadBundleScene(bundleName: string, sceneName: string, onFinishBack?: () => void, isInScene: boolean = true) {
+    public static loadBundleScene(bundleName: string, sceneName: string, onFinishBack?: () => void, isInScene: boolean = true) {
         cc.assetManager.loadBundle(
             bundleName,
             (err, bundle) => {
                 if (err) {
-                    console.log(err);
+                    CFTools.log(err);
                 }
                 else {
                     if (!isInScene) { return; }
