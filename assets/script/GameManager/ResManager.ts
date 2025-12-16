@@ -36,7 +36,7 @@ export class ResManager {
      * @param callBack 加载完成回调
      */
     public static loadResSpriteFrame(url: string, sprite: cc.Node, parent?: cc.Node, Pos?: cc.Vec2, zIndex = 0, callBack?: any) {
-        cc.loader.loadRes(url, cc.SpriteFrame, function (error: any, SpriteFrame: cc.SpriteFrame) {
+        cc.resources.load(url, cc.SpriteFrame, function (error: any, SpriteFrame: cc.SpriteFrame) {
             if (error) {
                 CFTools.error(error);
             } else {
@@ -56,7 +56,7 @@ export class ResManager {
      * @param callBack 加载完成回调
      */
     public static loadResAny(url: string, resType: any, callBack?: any) {
-        cc.loader.loadRes(url, resType, function (error: any, res: any) {
+        cc.resources.load(url, resType, function (error: any, res: any) {
             if (error) {
                 CFTools.error(error);
             } else {
