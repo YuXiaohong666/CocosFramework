@@ -1,24 +1,37 @@
 import Singleton from "../Base/Singleton";
+import { GameData } from "../GameData/GameData";
 import { ResManager } from "./ResManager";
 export class AudioManager extends Singleton {
-    bgMusic: any;  //背景音乐
+    public bgMusic: any;  //背景音乐
     isPlayEffect: boolean = true; //是否播放音效
     isPlayMusic: boolean = true; //是否播放音乐
+
 
     /**
      * 播放背景音乐
      * @param audioUrl 音乐文件名
      * @param value 音量
      */
-    playMusic(audioUrl: string, value = 0.5) {
+    public async playMusic(audioUrl: string, value = 1) {
+        if (!GameData.getInstance().musicSwitcher) return;
         if (!this.isPlayMusic) { return; }
         this.stopMusic();
-        ResManager.loadResAny(cc.url.raw('resources/music/' + audioUrl + '.mp3'), cc.AudioClip, (audio: cc.AudioClip) => {
-            this.bgMusic = cc.audioEngine.play(audio, true, value);
+        const audioClip = await new Promise<cc.AudioClip>((resolve, reject) => {
+            cc.resources.load(`music/${audioUrl}`, cc.AudioClip, (err, clip: cc.AudioClip) => {
+                if (err) {
+                    cc.error(err);
+                    reject(err);
+                    return;
+                }
+                resolve(clip);
+            });
         });
+
+        // 播放音频
+        this.bgMusic = cc.audioEngine.play(audioClip, true, value);
     };
     /** 停止播放背景音乐 */
-    stopMusic() {
+    public stopMusic() {
         this.stopAudio(this.bgMusic);
     };
     /**
@@ -27,14 +40,26 @@ export class AudioManager extends Singleton {
      * @param value 音量大小
      * @param isLoop 是否循环播放
      */
-    playEffect(audioUrl: string, value = 0.5, isLoop = false) {
+    public async playEffect(audioUrl: string, value = 0.5, isLoop = false) {
+        if (!GameData.getInstance().musicSwitcher) return;
         if (!this.isPlayEffect) { return; }
-        ResManager.loadResAny(cc.url.raw('resources/music/' + audioUrl + '.mp3'), cc.AudioClip, (audio: cc.AudioClip) => {
-            cc.audioEngine.play(audio, true, value);
+
+        const audioClip = await new Promise<cc.AudioClip>((resolve, reject) => {
+            cc.resources.load(`music/${audioUrl}`, cc.AudioClip, (err, clip: cc.AudioClip) => {
+                if (err) {
+                    cc.error(err);
+                    reject(err);
+                    return;
+                }
+                resolve(clip);
+            });
         });
+
+        // 播放音效
+        cc.audioEngine.play(audioClip, isLoop, value);
     };
     /** 停止播放某个音效 */
-    stopAudio(audioE: any) {
+    public stopAudio(audioE: any) {
         if (audioE != null) {
             cc.audioEngine.stop(audioE);
             audioE = null;
@@ -46,7 +71,7 @@ export class AudioManager extends Singleton {
      * @param value 音量大小
      * @param isLoop 是否循环播放
      */
-    playAudioSource(audioUrl: string, value = 0.5, isLoop = false) {
+    public playAudioSource(audioUrl: string, value = 0.5, isLoop = false) {
         if (!this.isPlayMusic) { return; }
         ResManager.loadResAny(audioUrl, cc.AudioClip, (audioE: cc.AudioClip) => {
             this.newAudioSource(audioE, value, isLoop);
@@ -58,7 +83,7 @@ export class AudioManager extends Singleton {
      * @param value 音量
      * @param isLoop 是否循环
      */
-    newAudioSource(audioClip: cc.AudioClip, value = 0.5, isLoop = false) {
+    public newAudioSource(audioClip: cc.AudioClip, value = 0.5, isLoop = false) {
         let node = new cc.Node();
         let audioE = node.addComponent(cc.AudioSource);
         audioE.clip = audioClip;
