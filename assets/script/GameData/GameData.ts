@@ -2,6 +2,8 @@ import Singleton from "../Base/Singleton";
 import { StorageManager } from "../GameManager/StorageManager";
 import { Tools } from "../Tools/Tools";
 export class GameData extends Singleton {
+    // 数据存储键名（在此处替换为游戏名，防止存档冲突）
+    private storageName: string = "GameName_GameData";
     /** 当前关卡数 */
     public level: number = 1;
     /** 音乐开关 */
@@ -45,7 +47,10 @@ export class GameData extends Singleton {
      * 从本地缓存中初始化游戏数据
      */
     initData(): void {
-        this.level = JSON.parse(StorageManager.getStorage("gameData"))?.level ?? 1;
+        this.level = JSON.parse(StorageManager.getStorage(this.storageName))?.level ?? 1;
+        this.musicSwitcher = JSON.parse(StorageManager.getStorage(this.storageName))?.musicSwitcher ?? true;
+        this.effectSwitcher = JSON.parse(StorageManager.getStorage(this.storageName))?.effectSwitcher ?? true;
+        this.currentDay = JSON.parse(StorageManager.getStorage(this.storageName))?.currentDay ?? Tools.getDateStr();
 
         // 检查今天是不是新的一天
         if (Tools.getDateStr() != this.currentDay) {
@@ -61,8 +66,11 @@ export class GameData extends Singleton {
     setData(): void {
         let gameData = {
             level: this.level,
+            musicSwitcher: this.musicSwitcher,
+            effectSwitcher: this.effectSwitcher,
+            currentDay: this.currentDay
         }
-        StorageManager.setStorage("gameData", JSON.stringify(gameData));
+        StorageManager.setStorage(this.storageName, JSON.stringify(gameData));
     }
 }
 
