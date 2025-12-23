@@ -18,3 +18,8 @@ export class GameDefine extends Singleton {
     mainGame: MainGame;
     isDebug: boolean = false;
 }
+
+export interface SaveTime {
+    time: number
+    currentEnergyNum: number
+}
