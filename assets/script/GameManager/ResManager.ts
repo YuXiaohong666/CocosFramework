@@ -66,7 +66,14 @@ export class ResManager {
             }
         });
     };
-    /** 加载bundle 场景 */
+
+    /**
+     * 加载bundle包中的场景
+     * @param bundleName bundle名
+     * @param sceneName 场景名
+     * @param onFinishBack 加载完成回调
+     * @param isInScene 加载完成是否进入场景
+     */
     public static loadBundleScene(bundleName: string, sceneName: string, onFinishBack?: () => void, isInScene: boolean = true) {
         cc.assetManager.loadBundle(
             bundleName,
@@ -85,5 +92,20 @@ export class ResManager {
                 }
             }
         );
+    }
+
+    /**
+     * 加载远程图片并挂载到节点上
+     * @param node 挂载的节点
+     * @param url 远程图片链接
+     */
+    public static loadRemoteTexture(node: cc.Node, url: string) {
+        cc.assetManager.loadRemote(url, { ext: '.png' }, (err, texture: cc.Texture2D) => {
+            let spriteFrame = new cc.SpriteFrame(texture);
+            node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+            if (err) {
+                CFTools.error(err);
+            }
+        })
     }
 }

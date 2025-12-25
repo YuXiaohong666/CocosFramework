@@ -14,7 +14,7 @@ export class Tools {
         this.SpriteFrameDic.clear();
         this.PrefabDic.clear();
     }
-    //-----------------------------节点预制体相关-------------------------------
+    // #region 节点预制体相关
     /**
      * 新建一个预制体在场景里
      * @param preName 预制体名字或url
@@ -68,7 +68,8 @@ export class Tools {
     public static setNodeParent(node: cc.Node, parent: cc.Node) {
         NodeTools.setNodeParent(node, parent);
     };
-    //----------------------------------数学数组相关----------------------------------
+
+    // #region 数学数组相关
     /**
      * 获取随机数
      * @param isInteger 是否随机整数  默认整数
@@ -121,10 +122,24 @@ export class Tools {
      * @param maxNum 最大取值范围
      * @param getNum 取几个数字
      */
-    public static getDiffNumRandom(minNum: number, maxNum: number, getNum: number) {
+    public static getDiffNumRandom(minNum: number, maxNum: number, getNum: number): Array<number> {
         return MathTools.getDiffNumRandom(minNum, maxNum, getNum);
     };
-    //--------------------------------向量坐标计算相关------------------------------------
+
+    /**
+     * 为节点添加Button组件(缩放样式)
+     * @param node 要添加组件的节点
+     * @param targetNode 挂载脚本的节点
+     * @param compName 脚本名
+     * @param funcName 点击事件调用的方法名
+     * @param zoomScale 按钮缩放倍数
+     * @param customEventData 参数
+     */
+    public static addButton(node: cc.Node, targetNode: cc.Node, compName: string, funcName: string, zoomScale: number = 0.9, customEventData: string = ''): void {
+        NodeTools.addButton(node, targetNode, compName, funcName, zoomScale, customEventData);
+    }
+
+    // #region 向量坐标计算相关
     /**
      * 根据两个点  求角度
      * @param pos1 起始点坐标
@@ -171,7 +186,8 @@ export class Tools {
     public static getToNodePosForWorld(worldPos: cc.Vec2, obj: cc.Node) {
         return VecTools.getToNodePosForWorld(worldPos, obj);
     }
-    //--------------------------------数组操作相关------------------------------------
+
+    // #region 数组操作相关
     /** 根据value值 从数组里面移除 */
     public static removeArrForValue(tempArr: Array<any>, value: any) {
         return tempArr.splice(tempArr.indexOf(value), 1);
@@ -188,7 +204,8 @@ export class Tools {
     public static addArrIndex(tempArr: Array<any>, index: number, value: any) {
         return tempArr.splice(index, 0, value);
     }
-    //--------------------------------其他------------------------------------
+
+    // #region 字符串操作
     /**
      *  字符串指定位置插入新字符 
      * @param str 需要操作的字符串
@@ -207,8 +224,7 @@ export class Tools {
         return (Array(length).join('0') + num).slice(-length);
     };
 
-
-
+    // #region 日期相关
     /**
      * 获取当前年份
      * @returns 当前年份的数值
@@ -256,6 +272,16 @@ export class Tools {
      */
     public static getDateStr(): string {
         return DateTools.getYear() + "年" + (DateTools.getMonth() + 1) + "月" + DateTools.getDay() + "日";
+    }
+
+    // #region 颜色相关
+    /**
+     * 将HEX格式转换为RGB格式的cc.Color对象
+     * @param colorStr HEX格式的颜色字符串
+     * @returns cc.Color格式的颜色对象
+     */
+    public static getColorFromHex(colorStr: string): cc.Color {
+        return ColorTools.getColorFromHex(colorStr);
     }
 }
 
@@ -345,6 +371,21 @@ class NodeTools {
         node.parent = parent;
         node.position = cc.v3(Pos.x, Pos.y);
     };
+
+    /** 为节点添加一个Button组件 */
+    public static addButton(node: cc.Node, targetNode: cc.Node, compName: string, funcName: string, zoomScale: number = 0.9, customEventData: string = ''): void {
+        let button: cc.Button = node.addComponent(cc.Button);
+        button.interactable = true;
+        button.transition = cc.Button.Transition.SCALE;
+        button.zoomScale = zoomScale;
+        let handler: cc.Component.EventHandler = new cc.Component.EventHandler();
+        handler.target = targetNode;
+        handler.component = compName;
+        handler.handler = funcName;
+        handler.customEventData = customEventData;
+        button.clickEvents.push(handler);
+        console.log(handler);
+    }
 }
 /** 数学数组计算相关 工具类 */
 class MathTools {
@@ -418,7 +459,7 @@ class MathTools {
      * @param getNum 获取的个数
      * @returns 取值结果
      */
-    public static getDiffNumRandom(minNum: number, maxNum: number, getNum: number) {
+    public static getDiffNumRandom(minNum: number, maxNum: number, getNum: number): Array<number> {
         var arr = [];
         for (let i = minNum; i <= maxNum; i++) {
             arr.push(i);
@@ -554,5 +595,14 @@ class DateTools {
         }
         // 通过创建日期对象获取月末最后一天的日期数
         return new Date(year, month, 0).getDate();
+    }
+}
+
+class ColorTools {
+    /** 将HEX格式转换为RGB格式的cc.Color对象 */
+    public static getColorFromHex(colorStr: string): cc.Color {
+        let color: cc.Color = cc.color(255, 255, 255);
+        cc.Color.fromHEX(color, colorStr);
+        return color;
     }
 }

@@ -2,7 +2,7 @@ import Singleton from "../Base/Singleton";
 import { SaveTime } from "../GameDefine/GameDefine";
 import { StorageManager } from "../GameManager/StorageManager";
 import { CFTools } from "./CFTools";
-
+/** 体力值系统 */
 export default class Energy extends Singleton {
 
     /** 默认体力上限为5 */
