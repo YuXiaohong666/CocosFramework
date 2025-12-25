@@ -75,7 +75,8 @@ Of course, no one template will serve all projects since your needs may be diffe
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-<img src="https://yuxiaohong.cn/Image/avatar1.jpeg" width = 50 height = 50/><img src="https://yuxiaohong.cn/Image/avatar2.jpeg" width = 50 height = 50/>
+<a href = "https://github.com/YuXiaohong666"><img src="https://yuxiaohong.cn/Image/avatar1.jpeg" width = 50 height = 50/></a><a href = "https://github.com/YuXiaohong666"><img src="https://yuxiaohong.cn/Image/avatar2.jpeg" width = 50 height = 50/></a>
+
 
 
 
