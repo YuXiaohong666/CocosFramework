@@ -69,6 +69,16 @@ export class Tools {
         NodeTools.setNodeParent(node, parent);
     };
 
+    /**
+     * 获取当前节点在另一个节点下的相对坐标
+     * @param node 要转换的节点
+     * @param otherNode 要转换到的目标父节点下
+     * @returns 目标父节点下的相对坐标
+     */
+    public static convertToNodeSpaceOf(node: cc.Node, otherNode: cc.Node): cc.Vec3 {
+        return NodeTools.convertToNodeSpaceOf(node.position, node.parent, otherNode);
+    }
+
     // #region 数学数组相关
     /**
      * 获取随机数
@@ -127,7 +137,7 @@ export class Tools {
     };
 
     /**
-     * 为节点添加Button组件(缩放样式)
+     * 为节点添加Button组件
      * @param node 要添加组件的节点
      * @param targetNode 挂载脚本的节点
      * @param compName 脚本名
@@ -371,6 +381,21 @@ class NodeTools {
         node.parent = parent;
         node.position = cc.v3(Pos.x, Pos.y);
     };
+    /** 生成格子地图 */
+    public static getBlockMap(blockSize: number, row: number, col: number, gapHorizontal: number, gapVertical?: number): Array<Array<number>> {
+        let pos: cc.Vec2 = cc.v2(0, 0);
+
+        // pos.x = j * size - (row / 2 * size - size / 2);
+        // pos.y = -i * size + (col / 2 * size - size / 2);
+        return [];
+    }
+
+    /** 将一个节点下的坐标转换到另一个节点的本地坐标系下 */
+    public static convertToNodeSpaceOf(pos: cc.Vec3, mainNode: cc.Node, otherNode: cc.Node): cc.Vec3 {
+        const worldPos = mainNode.convertToWorldSpaceAR(pos);
+        const localPos = otherNode.convertToNodeSpaceAR(worldPos);
+        return localPos;
+    }
 
     /** 为节点添加一个Button组件 */
     public static addButton(node: cc.Node, targetNode: cc.Node, compName: string, funcName: string, zoomScale: number = 0.9, customEventData: string = ''): void {
@@ -384,7 +409,6 @@ class NodeTools {
         handler.handler = funcName;
         handler.customEventData = customEventData;
         button.clickEvents.push(handler);
-        console.log(handler);
     }
 }
 /** 数学数组计算相关 工具类 */
