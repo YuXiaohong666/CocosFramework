@@ -58,7 +58,7 @@
 
 贡献正是让开源社区成为学习、启发和创造的绝佳场所的原因。**非常感谢**你们的任何贡献。
 
-<a href = "https://github.com/YuXiaohong666"><img src="https://yuxiaohong.cn/Image/avatar1.jpeg" width = 50 height = 50/></a><a href = "https://github.com/Cube-zzp"><img src="https://yuxiaohong.cn/Image/avatar2.jpeg" width = 50 height = 50/></a>
+<a href = "https://github.com/YuXiaohong666"><img src="https://yuxiaohong.cn/Image/avatar1.jpeg" width = 50 height = 50/></a><a href = "https://github.com/Cube-zzp"><img src="https://yuxiaohong.cn/Image/avatar2.jpeg" width = 50 height = 50/></a><a href = "https://github.com/Jaggerrrrr"><img src="https://avatars.githubusercontent.com/u/117072556?v=4" width = 50 height = 50/></a>
 
 如果你有改进建议，请创建分支并创建一个拉取请求。你也可以直接用“增强”标签开一个问题。 别忘了给这个项目标星！再次感谢！
 
