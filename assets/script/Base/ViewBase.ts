@@ -17,7 +17,11 @@ export default class ViewBase extends cc.Component {
     }
 
     /** 关闭UI时的操作，默认为直接销毁节点 */
-    closeUI(): void {
-        this.node.destroy();
+    closeUI(isDestroy: boolean = false): void {
+        if (isDestroy) {
+            this.node.destroy();
+        } else {
+            this.node.removeFromParent();
+        }
     }
 }

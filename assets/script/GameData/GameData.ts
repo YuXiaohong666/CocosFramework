@@ -13,6 +13,10 @@ export class GameData extends Singleton {
     /** 今日 */
     public currentDay: string = Tools.getDateStr();
 
+    public static get _ins(): GameData {
+        return this.getInstance();
+    }
+
 
 
     /**

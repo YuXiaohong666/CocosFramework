@@ -2,6 +2,10 @@ import Singleton from "../Base/Singleton";
 import MainGame from "../GameScene/MainGame";
 
 export class GameDefine extends Singleton {
+    public static get _ins(): GameDefine {
+        return GameDefine._ins;
+    }
+
     colorArr: Array<string> = [
         "#915743",
         "#FDF845",

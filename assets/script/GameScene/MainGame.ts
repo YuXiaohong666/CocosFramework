@@ -7,8 +7,8 @@ const { ccclass, property } = cc._decorator;
 export default class MainGame extends cc.Component {
 
     onLoad() {
-        GameData.getInstance().initData();
-        GameDefine.getInstance().mainGame = this;
+        GameData._ins.initData();
+        GameDefine._ins.mainGame = this;
     }
 
     start() {

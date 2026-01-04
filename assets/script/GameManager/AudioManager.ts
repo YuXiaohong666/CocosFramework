@@ -6,6 +6,10 @@ export class AudioManager extends Singleton {
     isPlayEffect: boolean = true; //是否播放音效
     isPlayMusic: boolean = true; //是否播放音乐
 
+    public static get _ins(): AudioManager {
+        return this.getInstance();
+    }
+
 
     /**
      * 播放背景音乐

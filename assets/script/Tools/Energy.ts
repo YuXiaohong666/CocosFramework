@@ -14,6 +14,10 @@ export default class Energy extends Singleton {
 
     private timeStorageName: string = "TimeStorage";
 
+    public static get _ins(): Energy {
+        return this.getInstance();
+    }
+
 
     public initTime(): void {
         let data: string | SaveTime = StorageManager.getStorage(this.timeStorageName);

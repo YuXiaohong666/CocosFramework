@@ -39,6 +39,10 @@
   </ol>
 </details>
 
+## 关于项目
+
+请参考我们的开发文档：[CocosFramework文档](https://yuxiaohong.cn/2025/12/26/CocosFrameworkDoc/)
+
 ## 开始使用
 
 克隆仓库之后直接使用CocosCreator导入项目打开即可

@@ -1,8 +1,7 @@
-import Singleton from "../Base/Singleton";
 import { CFTools } from "../Tools/CFTools";
 import { Tools } from "../Tools/Tools";
 
-export class PoolManager extends Singleton {
+export class PoolManager {
     private static PoolDic: Map<string, Node> = new Map();//存放所有对象池  字典
     /**
      * 把Node添加到对象池中
