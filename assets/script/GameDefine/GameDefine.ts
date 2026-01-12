@@ -3,7 +3,7 @@ import MainGame from "../GameScene/MainGame";
 
 export class GameDefine extends Singleton {
     public static get _ins(): GameDefine {
-        return GameDefine._ins;
+        return this.getInstance();
     }
 
     colorArr: Array<string> = [

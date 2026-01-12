@@ -114,9 +114,9 @@ export class Tools {
      * 重新打乱一个数组的顺序
      * @param Arr 要打乱的数组
      */
-    public static againSortArr(Arr: Array<any>) {
-        MathTools.againSortArr(Arr);
-    };
+    public static againSortArr<T>(arr: T[]): void {
+        MathTools.againSortArr(arr);
+    }
     /**
      * 将一个数组 按照里面的对象排序 
      * @param tempArr 传入的数组
